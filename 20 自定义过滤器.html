@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angular 模板</title>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        var App=angular.module("app",[]);
+        App.controller("appController",["$scope",function($scope){
+
+        }]);
+        //自定义过滤器  过滤器的名称 ，过滤器的行为
+        App.filter("reverse",function(){
+                return function(arg,arg1){
+                     //简单对数据进行一下处理
+                     return arg.split("").reverse().join("")+arg1;
+                }
+        })
+
+    </script>
+</head>
+<body ng-app="app" ng-controller="appController">
+       {{'double kill'|reverse:'hello world'}}
+</body>
+</html>

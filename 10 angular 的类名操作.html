@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angular 模板</title>
+    <script src="libs/angular.min.js"></script>
+    <style>
+            .active{
+                  width: 200px;
+                  height: 200px;
+                  background-color: pink;
+            }
+    </style>
+
+    <script>
+        var App=angular.module("app",[]);
+        App.controller("appController",["$scope",function($scope){
+        }]);
+    </script>
+</head>
+<body ng-app="app" ng-controller="appController">
+      <!--
+            ng-class 指令  控制为当前元素添加一个类名，说明我们就可以做动画处理
+            ng-class 对应到angular 内部会编译成一个函数
+            active 是作为一个参数它要求这个参数是一个字符串
+            ng-class 除了可以接收一个字符串之外，还可以接收一个对象 {}
+            通过传递一个对象，来决定是否添加一个类名.
+            我要通过这个指令去执行动画. 因为可以控制是否添加类名了
+      -->
+      <div ng-class="{active:true}">
+      </div>
+</body>
+</html>

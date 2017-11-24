@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        var App=angular.module("itcastApp",[]);
+        App.controller("appController",["$scope",function($scope){
+             /*
+             * 1：ng-repeat 指令
+             * */
+             $scope.list=[
+                 {
+                     username:"小梅",
+                     age:40
+                 },
+                 {
+                     username:"小旋风",
+                     age:18
+                 }
+             ]
+        }]);
+    </script>
+</head>
+<body ng-app="itcastApp" ng-controller="appController">
+     <table>
+         <tr>
+             <td>姓名</td>
+             <td>年龄</td>
+         </tr>
+         <!--
+             每个指令对应到angular 里面都会编译成一个方法. 也对是angular 的api
+         只不过api 的形式以指令的方式给我们提供
+         -->
+         <tr ng-repeat="item in list">
+             <td>{{item.username}}</td>
+             <td>{{item.age}}</td>
+         </tr>
+     </table>
+</body>
+</html>

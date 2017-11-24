@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="libs/angular.min.js"></script>
+    <!--
+        1:定义应用
+        2:初始化应用，将应用以模块化的方式进行管理
+        3:mvc 设计模式
+    -->
+    <script>
+          var App=angular.module("itcastApp",[]);
+
+          //数据绑定
+          App.controller("appController",["$scope",function($scope){
+                /*
+                * 1:我们做前端开发：画个页面，发个请求，获取下数据，解析下数据，摆个view (json 格式的数据特别复杂，模板解析)，大量的dom 操作.
+                * 自动的数据处理过程
+                * 往model 上面去绑定一下数据，数据会自动流向到视图  model 的数据----> view 单项的数据绑定
+                * */
+                $scope.username="梅艳芳";
+
+          }]);
+
+    </script>
+</head>
+<body ng-app="itcastApp" ng-controller="appController">
+        <p>{{username}}</p>
+</body>
+</html>

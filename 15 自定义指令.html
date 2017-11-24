@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angular 模板</title>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        var App=angular.module("app",[]);
+        /*
+        * var App=angular.module("app",[]); 进行模块化，返回一个对象
+        * 这个对象提供了一个方法  directive(指令) 方法
+        * */
+        App.directive("itDouyin",function(){
+               //约束.
+               return {
+                     /*是否替换现在的标签*/
+                     replace:true,
+                     restrict:"ECMA", //支持哪几种类型
+                     template:"<h1>老赵的鱼去世了</h1>"
+               }
+        });
+    </script>
+</head>
+<body ng-app="app" ng-controller="appController">
+        <!--使用指令-->
+        <!--第一种方式  标签方式  E  element-->
+        <it-douyin></it-douyin>
+        <!--第二种方式  类名方式  C  class-->
+        <div class="it-douyin"></div>
+        <!--第三种方式  注释方式 mark 前面需要添加一个标记 directive:-->
+        <!--directive:it-douyin -->
+        <!--第四种方式 a 属性的方式 attribute-->
+        <div it-douyin></div>
+        <!--
+            细节:
+                 1:template 里面的内容必须使用 标签套起来
+                 2:指令的命名使用要注意驼峰命名法则
+        -->
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="libs/angular.min.js"></script>
+    <!--
+        1:定义应用
+        2:初始化应用，将应用以模块化的方式进行管理
+        3:mvc 设计模式
+    -->
+    <script>
+        var App=angular.module("itcastApp",[]);
+
+        App.controller("appController",["$scope",function($scope){
+                $scope.username="宝马老赵";
+                $scope.age="33";
+        }]);
+
+    </script>
+</head>
+<body ng-app="itcastApp" ng-controller="appController">
+        <!--
+            原则上来说，会出现闪烁问题
+            页面先出现{{username}} 然后被解析之后再出现宝马老赵
+            怎么去解决
+            我们有一个指令叫ng-bind
+        -->
+       <!-- <p>{{username}}</p>-->
+        <!--还有一种取值方式-->
+       <!-- <p ng-bind="username"></p>-->
+        <p>{{username}}{{age}}</p>
+        <!--使用ng-bind 解决不了-->
+        <!--ng-bind-template-->
+        <p ng-bind-template="{{username}}===>{{age}}"></p>
+
+        <!--如果数据非常之复杂，不能把要获取的属性都写ng-bind-template="{{username}}===>{{age}}" -->
+        <!-- ng-cloak 指令 解决这个闪烁问题 这是一个无值指令
+        但是这个指令angular 经过测试并不能解决闪烁问题，所以就是angular 的bug
+        -->
+        <p ng-cloak>{{username}}</p>
+</body>
+</html>

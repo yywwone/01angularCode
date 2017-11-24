@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angular 模板</title>
+    <!--引入bootstrap 的样式文件-->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <style>
+         .box{
+              width: 700px;
+              margin: 100px auto;
+         }
+    </style>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        var App=angular.module("app",[]);
+        App.controller("appController",["$scope","$filter",function($scope,$filter){
+                /*数据 原则来说实际开发，我肯定是在这里通过angular 封装的ajax 发送请求
+                * 获取到数据然后赋值给$scope 让数据从 model--->view
+                * */
+                var list=[
+                    {
+                         username:"老赵",
+                         sex:"男",
+                         weixin:"11",
+                         momo:"99991111",
+                         tantan:"88811122",
+                         baihe:"老布头",
+                         youyuan:"老头"
+                    },
+                    {
+                        username:"刘小强",
+                        sex:"男",
+                        weixin:"33",
+                        momo:"99991111",
+                        tantan:"88811122",
+                        baihe:"西门庆",
+                        youyuan:"西门庆"
+                    },
+                    {
+                        username:"梅恩豪",
+                        sex:"男",
+                        weixin:"66",
+                        momo:"99991111",
+                        tantan:"88811122",
+                        baihe:"没毛病",
+                        youyuan:"没毛病"
+                    },
+                    {
+                        username:"朱武",
+                        sex:"男",
+                        weixin:"88",
+                        momo:"99991111",
+                        tantan:"88811122",
+                        baihe:"小旋风",
+                        youyuan:"小旋风"
+                    }
+                ];
+
+                $scope.persons=list;
+
+                //绑定一个搜索事件
+                $scope.search=function(){
+                      $scope.persons=list;
+                      //我要进行搜索. 我等一下要通过过滤器进行搜索.
+                      //搜索到结果之后，赋值$scope 让它自动更新视图
+                      //通过过滤器进行搜索，在js 里面怎么去使用过滤器
+                      //把过滤器的整个对象给传进来.整个对象是angular 提供的 $filter
+                      //通过js 的方式可以调用到过滤器
+                      //$filter 过滤器里面提供了九个内置过滤器  date currency filter orderBy limitTo....
+                      var func=$filter("filter"); //根据名字找到对应的过滤器，返回的是一个方法
+                      //func 去调用，是用来过滤数据的，1：传递需要过滤的数据  2：需要传递过滤的条件.
+                      //我之前调用搜索filter {{data|filter:{username:"11"}}
+                      //准备搜索条件 {} key 需要根据那个字段进行搜索  value 用户输入的值
+                      //准备条件
+                      var obj={};
+                    console.log($scope.fieldName);
+                    //给对象赋值.
+                      obj[$scope.fieldName]=$scope.fieldValue;
+
+
+                    var result=func($scope.persons,obj);
+                      $scope.persons=result;
+                }
+                var isorderBy=false;
+                $scope.orderBy=function(filedName){
+                      //排序，我们使用过滤器 过滤器里面有9个，我通过 $filter 获取到 orderBy 的过滤器
+                    isorderBy=!isorderBy;
+                    $scope.persons=$filter("orderBy")($scope.persons,filedName,isorderBy);
+                }
+        }]);
+    </script>
+</head>
+<body ng-app="app" ng-controller="appController">
+    <div class="box">
+
+        <select  class="form-control" style="width: 200px;float: left;" ng-model="fieldName">
+            <option value="username">姓名</option>
+            <option value="sex">性别</option>
+            <!--
+              原因，为option 添加了一个ng-selected 的一个属性之后，select 里面的数据没有办法流向到model
+            -->
+            <option value="weixin">微信</option>
+            <option value="momo" selected>陌陌</option>
+            <option value="tantan">探探</option>
+            <option value="baihe">百合网</option>
+            <option value="youyuan">有缘网</option>
+        </select>
+        <input type="text" style="width: 200px;float: left;" class="form-control" ng-model="fieldValue" ng-keyup="search()">
+        <!--画一个表格-->
+        <table class="table table-bordered">
+            <tr>
+                <td ng-click="orderBy('username')">姓名</td>
+                <td ng-click="orderBy('sex')">性别</td>
+                <td ng-click="orderBy('weixin')">微信</td>
+                <td ng-click="orderBy('momo')">陌陌</td>
+                <td ng-click="orderBy('tantan')">探探</td>
+                <td ng-click="orderBy('baihe')">百合网</td>
+                <td ng-click="orderBy('youyuan')">珍爱网</td>
+            </tr>
+            <tr ng-repeat="person in persons">
+                <td>{{person.username}}</td>
+                <td>{{person.sex}}</td>
+                <td>{{person.weixin}}</td>
+                <td>{{person.momo}}</td>
+                <td>{{person.tantan}}</td>
+                <td>{{person.baihe}}</td>
+                <td>{{person.youyuan}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

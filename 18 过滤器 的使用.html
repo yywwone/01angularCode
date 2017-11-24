@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angular 模板</title>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        var App=angular.module("app",[]);
+        App.controller("appController",["$scope",function($scope){
+                $scope.price=11.111;
+                /*日期处理*/
+                $scope.brithday=new Date();
+                //$scope.list=["海瑞","海带","海蛎子","海参炒面","郑爽"];
+                $scope.list=[{username:"海瑞",age:21},{username:"老段",age:39},{"username":"汪磊",age:23}];
+                $scope.numbers=[11,22,44,21,31];
+        }]);
+
+
+    </script>
+</head>
+<body ng-app="app" ng-controller="appController">
+       <!--我先要显示数据，显示我指定的格式的数据，我就需要通过过滤器去处理
+       怎么去调起过滤器 我们在数据的后面添加 | currency
+       currency 货币的意思  : 后面跟的是参数 多个参数就是多个:
+            底层也是调用一个方法，调用方法就可以传递参数
+       -->
+        {{price|currency:'¥':'3'}}
+       <!--日期处理 |date 调用过滤器-->
+       <p>{{brithday|date:'yyyy-MM-dd HH小时mm分钟ss秒'}}</p>
+        <!--搜索 注意 filter 后面跟的条件{age:21} 是一个对象，对象后面必须添加一个空格 angular 在解析的时候没有进行处理. -->
+        {{list|filter:{age:21} }} <br>
+
+        <!--排序 order by -->
+        <!--默认是升序
+        orderBy 方法接收两个参数
+                1:第一个参数我传递的是一个空字符串
+                2: true（降序）/false(升序)
+        -->
+        {{list|orderBy:"age":false}}
+        <br>
+        <div>你{{'111.222'|currency:'&yen'}}好</div>
+</body>
+</html>
